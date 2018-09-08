@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Slogan {
-    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-,.";
+    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
     String shiftedAlphabet;
     String keyword;
 

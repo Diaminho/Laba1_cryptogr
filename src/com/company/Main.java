@@ -105,6 +105,7 @@ public class Main {
 
 
         //слогановый шифр
+        /*
         Slogan testSlogan = new Slogan();
         testSlogan.setKeyword("гдея.");
         testSlogan.setShiftedAlphabet();
@@ -113,9 +114,27 @@ public class Main {
         System.out.println("Зашифрованное слово:"+encryptedString);
         String decryptedString=testSlogan.doDecrypt(encryptedString);
         System.out.println("Расшифрованное слово:"+decryptedString);
+        */
 
-        //квадрат Полибуса
+        //квадрат Полибия
+        /*
         PolybiusSquare testPoly=new PolybiusSquare();
-        //System.out.println(testPoly.getAlphabet()[0][1]);
+        testPoly.printAlphabet();
+        String str=" +-";
+        System.out.println("Исходная строка: "+str);
+        String encStr=testPoly.doEncrypt(str);
+        System.out.println("Зашифрованная строка: "+encStr);
+        String decStr=testPoly.doDecrypt(encStr);
+        System.out.println("Расшифрованная строка: "+decStr);
+        */
+        //System.out.println(encStr);
+
+       //Гаммирование
+        Gambling test_gambl=new Gambling();
+        test_gambl.setKey("ключ");
+        String str=test_gambl.doEncrypt("текст для шифрования");
+        System.out.println(str);
+        str=test_gambl.doDecrypt(str);
+        System.out.println(str);
     }
 }

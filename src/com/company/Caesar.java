@@ -2,7 +2,7 @@ package com.company;
 
 public class Caesar implements ReplacementCode {
     int shift;
-    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-,.";
+    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
     //StringBuffer shiftedAlphabet=new StringBuffer();
 
 
