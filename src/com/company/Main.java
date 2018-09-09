@@ -1,8 +1,7 @@
 package com.company;
 
 
-import java.io.*;
-import java.util.Scanner;
+import com.company.algorythms.CardanoGrid;
 
 public class Main {
 
@@ -130,11 +129,27 @@ public class Main {
         //System.out.println(encStr);
 
        //Гаммирование
+        /*
         Gambling test_gambl=new Gambling();
         test_gambl.setKey("ключ");
         String str=test_gambl.doEncrypt("текст для шифрования");
         System.out.println(str);
         str=test_gambl.doDecrypt(str);
         System.out.println(str);
+        */
+
+        //Кардано
+        CardanoGrid testCardano=new CardanoGrid();
+        char[][][] encr=testCardano.doEncrypt("строкаюяафыфаыфа ааа");
+        for (int m=0;m<encr.length;m++) {
+            for (int i = 0; i < encr[m].length; i++) {
+                for (int j = 0; j < encr[m][i].length; j++)
+                    System.out.print(encr[m][i][j]);
+                System.out.println();
+            }
+            System.out.println();
+        }
+        String decr=testCardano.doDecrypt(encr);
+        System.out.println("Расшифрованная строка: "+decr);
     }
 }
