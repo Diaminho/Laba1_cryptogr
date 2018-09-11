@@ -1,106 +1,54 @@
 package com.company;
 
 
+import com.company.algorythms.Caesar;
 import com.company.algorythms.CardanoGrid;
+import com.company.tools.Menu;
+
+import java.io.*;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-    /*
         Scanner in = new Scanner(System.in);
-        int menu=0;
-        while (menu!=3) {
-            System.out.println("Шифрование и дешифрование при помощи метода шифра Цезаря");
-            System.out.println("Введите 1 для шифрования");
-            System.out.println("Введите 2 для дешифрования");
-            System.out.println("Введите 3 для выхода");
+        int out_menu=0;
+        while (out_menu!=6){
+            System.out.println("Главное меню");
+            System.out.println("Введите 1 для шифрования/дешифрования с помощью шифра Цезаря");
+            System.out.println("Введите 2 для шифрования/дешифрования с помощью слогана");
+            System.out.println("Введите 3 для шифрования/дешифрования с помощью квадрата Полибия");
+            System.out.println("Введите 4 для шифрования/дешифрования с помощью решетки Кардано");
+            System.out.println("Введите 5 для шифрования/дешифрования с помощью однократного Гаммирования");
+            System.out.println("Введите 6 для выхода");
             System.out.println("Введите число:");
-            menu = in.nextInt();
+            out_menu = in.nextInt();
             in.nextLine();
-            switch (menu) {
+            switch(out_menu) {
                 case 1:
-                    String strToEncrypt;
-                    //считывание данных из файла
-                    System.out.println("Введите имя файла для шифрования: ");
-                    String fileName = in.nextLine();
-                    System.out.println("Вы ввели: " + fileName);
-                    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-                        //чтение построчно
-                        strToEncrypt = br.readLine();
-                        //шифрование и дефишрования с помощью шифра Цезаря
-                        Caesar testCaesar = new Caesar();
-                        int shift;
-                        System.out.println("Введите сдвиг");
-                        shift = in.nextInt();
-                        in.nextLine();
-                        testCaesar.setShift(shift);
-                        //String strToDecrypt="здесь была строка";
-                        System.out.println("Исходная строка:" + strToEncrypt);
-
-                        //шифрование
-                        String encryptedString = testCaesar.doEncrypt(strToEncrypt);
-                        System.out.println("Зашифрованная строка:" + encryptedString);
-
-                        //Запись зашифрованной строки в файл1
-                        System.out.println("Введите имя файла для записи результатов шифрования");
-                        String newFileName = in.nextLine();
-                        try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFileName))) {
-                            bw.write(encryptedString);
-                        } catch (IOException ex) {
-
-                            System.out.println(ex.getMessage());
-                        }
-
-                    } catch (IOException ex) {
-
-                        System.out.println(ex.getMessage());
-                    }
-
-                    break;
+                    Menu.CaesarMenu(in);
                 case 2:
-                    //расшифрование
-                    String strToDecrypt;
-                    Caesar testCaesar = new Caesar();
-                    //считывание данных из файла
-                    System.out.println("Введите имя файла для дешифрования: ");
-                    fileName = in.nextLine();
-                    System.out.println("Вы ввели: " + fileName);
-
-                    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-                        //чтение построчно
-                        strToDecrypt = br.readLine();
-                        System.out.println("Исходная строка:" + strToDecrypt);
-
-                        System.out.println("Введите сдвиг:");
-                        int shift = in.nextInt();
-                        in.nextLine();
-                        testCaesar.setShift(shift);
-                        //расшифрование
-                        String decryptedString = testCaesar.doDecrypt(strToDecrypt);
-                        System.out.println("Расшифрованная строка:" + decryptedString);
-                        System.out.println("Введите имя файла для записи результатов дешифрования");
-                        String newFileName = in.next();
-                        try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFileName))) {
-                            bw.write(decryptedString);
-                        } catch (IOException ex) {
-
-                            System.out.println(ex.getMessage());
-                        }
-                    } catch (IOException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                    break;
-
+                    Menu.SloganMenu(in);
                 case 3:
+                    Menu.PolybiusMenu(in);
+                case 4:
+                    Menu.CardanoMenu(in);
+                case 5:
+                    Menu.GamblingMenu(in);
+                case 6:
                     System.out.println("Выход");
                     break;
                 default:
                     System.out.println("Нет такой опции");
                     break;
+
+
             }
 
         }
-    */
+
+
+
 
 
         //слогановый шифр
@@ -139,7 +87,7 @@ public class Main {
         */
 
         //Кардано
-        CardanoGrid testCardano=new CardanoGrid();
+        /*CardanoGrid testCardano=new CardanoGrid();
         char[][][] encr=testCardano.doEncrypt("строкаюяафыфаыфа ааа");
         for (int m=0;m<encr.length;m++) {
             for (int i = 0; i < encr[m].length; i++) {
@@ -151,5 +99,7 @@ public class Main {
         }
         String decr=testCardano.doDecrypt(encr);
         System.out.println("Расшифрованная строка: "+decr);
+        */
     }
 }
+

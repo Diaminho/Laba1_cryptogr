@@ -1,5 +1,7 @@
 package com.company.algorythms;
 
+import java.util.ArrayList;
+
 public class Gambling {
     //final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
     //int alphabet_bin;
@@ -38,5 +40,44 @@ public class Gambling {
             decryptedString.insert(i,(char)((int)key.charAt(i%key.length())^(int)strToDecrypt.charAt(i)));
         }
         return decryptedString.toString();
-    };
+    }
+
+    public ArrayList<String> strToBin(String str) {
+        ArrayList<String> strArr = new ArrayList<String>();
+        for (int i=0;i<str.length();i++)
+            //System.out.println(Integer.parseInt(Integer.toString((int)str.charAt(i),2)));
+            //System.out.println((int)str.charAt(i));
+            strArr.add(Integer.toBinaryString((int)str.charAt(i)));
+
+        return strArr;
+    }
+
+    public String binToStr(ArrayList ar) {
+        String info="";
+        for (int i=0;i<ar.size();i++)
+            info = info + (char)Integer.parseInt(ar.get(i).toString(),2);
+
+        //System.out.println("info :"+info);
+        return info;
+    }
+
+    public ArrayList<String> strToHex(String str) {
+        ArrayList<String> strArr = new ArrayList<String>();
+        for (int i=0;i<str.length();i++)
+            //System.out.println(Integer.parseInt(Integer.toString((int)str.charAt(i),2)));
+            //System.out.println((int)str.charAt(i));
+            strArr.add(Integer.toString((int)str.charAt(i),16));
+
+        return strArr;
+    }
+
+
+
+    public String hexToStr(ArrayList ar) {
+        String info=" ";
+        for (int i=0;i<ar.size();i++)
+            info = info + (char)Integer.parseInt(ar.get(i).toString(),16);
+        //System.out.println("info :"+info);
+        return info;
+    }
 }
