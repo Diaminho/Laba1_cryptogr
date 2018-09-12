@@ -1,6 +1,7 @@
 package com.company.tools;
 
 import com.company.algorythms.*;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -275,7 +276,7 @@ public class Menu {
 
     public static void CardanoMenu(Scanner in) {
         int menu = 0;
-        while (menu != 3) {
+        while (menu != 4) {
             System.out.println("Шифрование и дешифрование при помощи решетки Кардано");
             System.out.println("Введите 1 для шифрования");
             System.out.println("Введите 2 для дешифрования");
@@ -286,38 +287,129 @@ public class Menu {
             in.nextLine();
             switch (menu) {
                 case 1:
-                    CardanoGrid testCardano = new CardanoGrid();
-                    char[][][] encr = testCardano.doEncrypt("строкаюяафыфаыфа ааа");
-                    for (int m = 0; m < encr.length; m++) {
-                        for (int i = 0; i < encr[m].length; i++) {
-                            for (int j = 0; j < encr[m][i].length; j++)
-                                System.out.print(encr[m][i][j]);
-                            System.out.println();
-                        }
-                        System.out.println();
-                    }
-                    String decr = testCardano.doDecrypt(encr);
-                    System.out.println("Расшифрованная строка: " + decr);
-                    testCardano.generateGrid1();
-                    break;
-                case 3:
-                    CardanoGrid testCardano1=new CardanoGrid();
+                    CardanoGrid testCardano1 = new CardanoGrid();
+                    System.out.println("Введите размер решетки:");
+                    testCardano1.setSize(in.nextInt());
+                    in.nextLine();
                     testCardano1.generateGrid1();
-                    System.out.println("Введите имя файла для записи результатов дешифрования");
-                    String newFileName = in.next();
+                    int[] gridBin=testCardano1.getGridBin();
+                    int[] gridDec=testCardano1.binToDec(gridBin);
+                    System.out.println("Была сгенерирована следующая сетка:");
+                    for (int i=0;i<testCardano1.getGrid().length;i++){
+                        System.out.print(gridDec[i]+" ");
+                    }
+                    System.out.println();
+
+                    System.out.println("Введите имя файла для сохранения сгенерированной решетки");
+                    String FileName = in.nextLine();
                     for (int i=0;i<testCardano1.getGrid().length;i++) {
                         for (int j=0;j<testCardano1.getGrid()[i].length;j++){
-                            try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFileName))) {
-                                bw.write(String.valueOf(testCardano1.getGrid()[i][j]));
-                                System.out.println(String.valueOf(testCardano1.getGrid()[i][j]));
-                                bw.write(System.lineSeparator());
-                                //bw.write(" ");
+                            try (BufferedWriter bw = new BufferedWriter(new FileWriter(FileName))) {
+                                for (int k = 0; k < gridBin.length; k++) {
+                                    bw.write(String.valueOf(gridBin[k]));
+                                    bw.newLine();
+                                }
+                                bw.flush();
+                                //bw.close();
                             }
                             catch (IOException ex) {
                                 System.out.println(ex.getMessage());
                             }
                         }
                     }
+
+                    testCardano1.setGridBin(gridBin);
+                    System.out.println("Введите имя файла с текстом для шифрования:");
+                    String fileToEnc=in.nextLine();
+                    String strToEncypt="";
+                    try (BufferedReader br1 = new BufferedReader(new FileReader(fileToEnc))) {
+                        strToEncypt=br1.readLine();
+                    }
+                    catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
+                    char[][][] encr = testCardano1.doEncrypt(strToEncypt);
+
+                    for (int i=0;i<encr.length;i++){
+                        for (int j=0;j<encr[i].length;j++){
+                            for (int k=0;k<encr[i][j].length;k++){
+                                System.out.println(encr[i][j][k]);
+                            }
+                            System.out.println();
+                        }
+                        System.out.println();
+                    }
+
+                    System.out.println("Введите имя файла для сохранения зашифрованной решетки");
+                    String FileName2 = in.next();
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(FileName2))) {
+                        for (int i=0;i<encr.length;i++){
+                            for (int j=0;j<encr[i].length;j++){
+                                for (int k=0;k<encr[i][j].length;k++){
+                                    bw.write(encr[i][j][k]);
+                                    bw.newLine();
+                                }
+                                    //System.out.println();
+                            }
+                                //System.out.println();
+                        }
+                    }
+                    catch (IOException ex){
+                        System.out.println(ex.getMessage());
+                    }
+
+                    break;
+                case 2:
+                    //расшифрование
+
+                    System.out.println("Введите имя файла с решеткой: ");
+                    String fileName1 = in.nextLine();
+                    CardanoGrid testCard = new CardanoGrid();
+                    try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
+                        //while (br.readLine()) != null){
+                        testCard.setSize(testCard.countLines(fileName1));
+                    }
+                    catch (IOException ex){
+                        System.out.println(ex.getMessage());
+                    }
+                    String tmpStr="";
+                    try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
+                        //while (br.readLine()) != null){
+                        testCard.setSize(testCard.countLines(fileName1));
+                    }
+                    catch (IOException ex){
+                        System.out.println(ex.getMessage());
+                    }
+                    //String strToDecrypt="";
+
+                    //считывание данных из файла
+                    System.out.println("Введите имя файла для дешифрования: ");
+                    String fileName = in.nextLine();
+                    //CardanoGrid testCard = new CardanoGrid();
+                    testCard.setSize(6);
+                    String strToDecrypt="";
+                    //System.out.println("Вы ввели: " + fileName);
+                    String str_tmp="";
+                    try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+                        //чтение построчно
+                        //str_tmp=br.readLine();
+
+                        while((str_tmp = br.readLine()) != null){
+                            strToDecrypt+= str_tmp;
+                            //System.out.println(str_tmp);
+                        }
+
+
+                    }
+                    catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    System.out.println(strToDecrypt);
+                    testCard.getInfoFromFile(strToDecrypt);
+                    String decText=testCard.doDecrypt(testCard.getEncryptedSquare());
+                    System.out.println("Расшифрованный текст: "+decText);
+                    //fileName = in.nextLine();
                     break;
                 case 4:
                     System.out.println("Выход");
@@ -354,8 +446,19 @@ public class Menu {
                         //чтение построчно
                         strToEncrypt = br.readLine();
                         Gambling testGambl=new Gambling();
-                        System.out.println("Введите ключ: ");
-                        testGambl.setKey(in.nextLine());
+                        System.out.println("Сгенерированный ключ: ");
+                        testGambl.generateKey(strToEncrypt);
+                        System.out.println(testGambl.getKey());
+                        System.out.println("Введите имя файла для сохранения ключа: ");
+                        String fileName1 = in.nextLine();
+                        try (BufferedWriter bw1 = new BufferedWriter(new FileWriter(fileName1))) {
+                            //чтение построчно
+                            bw1.write(testGambl.getKey());
+                        }
+                        catch (IOException ex){
+                            System.out.println(ex.getMessage());
+                        }
+
                         System.out.println("Исходная строка: "+strToEncrypt);
                         String encryptedString=testGambl.doEncrypt(strToEncrypt);
                         System.out.println("Зашифрованная строка: "+encryptedString);
@@ -386,9 +489,19 @@ public class Menu {
                         //чтение построчно
                         strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
-                        System.out.println("Введите ключ для дешифрования: ");
+                        System.out.println("Введите имя файла ключа для дешифрования: ");
+                        fileName = in.nextLine();
                         Gambling testGambl=new Gambling();
-                        testGambl.setKey(in.nextLine());
+                        String key="";
+                        try (BufferedReader br1 = new BufferedReader(new FileReader(fileName))) {
+                            //чтение построчно
+                            key = br1.readLine();
+                        }
+                        catch (IOException ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        testGambl.setKey(key);
+                        System.out.println("Ключ: "+key);
                         //расшифрование
                         String decryptedString=testGambl.doDecrypt(strToDecrypt);
                         System.out.println("Расшифрованная строка: "+decryptedString);

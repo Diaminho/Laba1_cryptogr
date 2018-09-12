@@ -1,9 +1,10 @@
 package com.company.algorythms;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Gambling {
-    //final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
+    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
     //int alphabet_bin;
     String key;
 
@@ -71,7 +72,14 @@ public class Gambling {
         return strArr;
     }
 
-
+    public void generateKey(String str){
+        String nkey=new String();
+        Random rnd = new Random(System.currentTimeMillis());
+        for (int i=0;i<str.length();i++){
+            nkey=nkey+alphabet.charAt(rnd.nextInt(alphabet.length()));
+        }
+        key=nkey;
+    }
 
     public String hexToStr(ArrayList ar) {
         String info=" ";

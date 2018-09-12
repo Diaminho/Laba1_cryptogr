@@ -1,16 +1,45 @@
 package com.company.algorythms;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 public class CardanoGrid {
     int[][] grid;
-    int size=4;
-    int gridDec[];
+
+    char[][][] encryptedSquare;
+
+    int size;
+    int gridBin[];
     final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
+
+
+    public char[][][] getEncryptedSquare() {
+        return encryptedSquare;
+    }
+
 
     public CardanoGrid() {
         //this.size=size;
         generateGrid();
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getSize() {
+        return size;
+    }
+    public void setGridBin(int[] gridBin) {
+        this.gridBin = gridBin;
+    }
+
+
+    public int[] getGridBin() {
+        return gridBin;
     }
 
     public int[][] getGrid() {
@@ -48,7 +77,7 @@ public class CardanoGrid {
         int[][] tmp_grid=grid;
         int k=0;
         int squares=(int)Math.ceil((double)strToEncrypt.length()/(4*ones));
-        char[][][] encryptedSquare=new char[squares][size][size];
+        encryptedSquare=new char[squares][size][size];
         for (int l=0;l<encryptedSquare.length;l++){
             for (int i = 0; i < encryptedSquare[l].length; i++) {
                 for (int j = 0; j < encryptedSquare[l][i].length; j++) {
@@ -133,11 +162,29 @@ public class CardanoGrid {
             }
 
         }
-        gridDec=new int[size];
+        grid=tmp_grid;
+        gridBin =new int[size];
+        int tmp_num=0;
+        for (int i=0;i<grid.length;i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                tmp_num=tmp_num*10+grid[i][j];
+            }
+            gridBin[i]=tmp_num;
+            tmp_num=0;
+        }
 
+        for (int i = 0; i< gridBin.length; i++)
+            System.out.println(gridBin[i]);
 
     }
 
+
+    public int[] binToDec(int[] bin) {
+        int[] dec=new int[bin.length];
+        for (int i=0;i<dec.length;i++)
+            dec[i]=Integer.parseInt(bin[i]+"",2);
+        return dec;
+    }
 
     void generateGrid() {
         grid = new int[size][size];
@@ -157,5 +204,59 @@ public class CardanoGrid {
             }
         }
     }
+
+
+    public String asBitString(int value, int stringSize) {
+        final char[] buf = new char[stringSize];
+        for (int i = stringSize-1; i >= 0; i--) {
+            buf[stringSize-1 - i] = ((1 << i) & value) == 0 ? '0' : '1';
+        }
+        return new String(buf);
+    }
+
+    public void getInfoFromFile(String info){
+        encryptedSquare=new char[info.length()/(size*size)][size][size];
+        int l=0;
+        for (int i=0;i<encryptedSquare.length;i++){
+            for (int j=0;j<encryptedSquare[i].length;j++){
+                for(int k=0;k<encryptedSquare[i][j].length;k++){
+                    encryptedSquare[i][j][k]=info.charAt(l);
+                    l++;
+                }
+            }
+        }
+
+    }
+
+    public int countLines(String filename) {
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream(filename));
+            try {
+                byte[] c = new byte[1024];
+                int count = 0;
+                int readChars = 0;
+                boolean empty = true;
+                while ((readChars = is.read(c)) != -1) {
+                    empty = false;
+                    for (int i = 0; i < readChars; ++i) {
+                        if (c[i] == '\n') {
+                            ++count;
+                        }
+                    }
+                }
+                return (count == 0 && !empty) ? 1 : count;
+            } finally {
+                is.close();
+            }
+
+        }
+        catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return -1;
+    }
+
+
 
 }

@@ -47,63 +47,15 @@ public class Main {
                     System.out.println("Нет такой опции");
                     break;
 
-
             }
 
         }
 
-
-
-
-
-        //слогановый шифр
         /*
-        Slogan testSlogan = new Slogan();
-        testSlogan.setKeyword("гдея.");
-        testSlogan.setShiftedAlphabet();
-        System.out.println("новый алфавит: "+testSlogan.getShiftedAlphabet());
-        String encryptedString=testSlogan.doEncrypt("слово");
-        System.out.println("Зашифрованное слово:"+encryptedString);
-        String decryptedString=testSlogan.doDecrypt(encryptedString);
-        System.out.println("Расшифрованное слово:"+decryptedString);
-        */
-
-        //квадрат Полибия
-        /*
-        PolybiusSquare testPoly=new PolybiusSquare();
-        testPoly.printAlphabet();
-        String str=" +-";
-        System.out.println("Исходная строка: "+str);
-        String encStr=testPoly.doEncrypt(str);
-        System.out.println("Зашифрованная строка: "+encStr);
-        String decStr=testPoly.doDecrypt(encStr);
-        System.out.println("Расшифрованная строка: "+decStr);
-        */
-        //System.out.println(encStr);
-
-       //Гаммирование
-        /*
-        Gambling test_gambl=new Gambling();
-        test_gambl.setKey("ключ");
-        String str=test_gambl.doEncrypt("текст для шифрования");
+        CardanoGrid cardanoGrid=new CardanoGrid();
+        String str=cardanoGrid.asBitString(100, 4);
         System.out.println(str);
-        str=test_gambl.doDecrypt(str);
-        System.out.println(str);
-        */
-
-        //Кардано
-        /*CardanoGrid testCardano=new CardanoGrid();
-        char[][][] encr=testCardano.doEncrypt("строкаюяафыфаыфа ааа");
-        for (int m=0;m<encr.length;m++) {
-            for (int i = 0; i < encr[m].length; i++) {
-                for (int j = 0; j < encr[m][i].length; j++)
-                    System.out.print(encr[m][i][j]);
-                System.out.println();
-            }
-            System.out.println();
-        }
-        String decr=testCardano.doDecrypt(encr);
-        System.out.println("Расшифрованная строка: "+decr);
+        cardanoGrid.getInfoFromFile("абвгде");
         */
     }
 }
