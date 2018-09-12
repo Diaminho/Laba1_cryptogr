@@ -5,6 +5,7 @@ import java.util.Random;
 public class CardanoGrid {
     int[][] grid;
     int size=4;
+    int gridDec[];
     final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
 
     public CardanoGrid() {
@@ -12,24 +13,10 @@ public class CardanoGrid {
         generateGrid();
     }
 
-    void generateGrid() {
-        grid = new int[size][size];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
-                if(i==0 && j==0) {
-                    grid[i][j] = 1;
-                }
-
-                else if (i==1 && j==1) {
-                    grid[i][j]=1;
-                }
-
-                else {
-                    grid[i][j] = 0;
-                }
-            }
-        }
+    public int[][] getGrid() {
+        return grid;
     }
+
 
     int countOnes() {
         int summ=0;
@@ -116,6 +103,59 @@ public class CardanoGrid {
             }
         }
         return decr.toString();
+    }
+
+    public void generateGrid1(){
+        int[][] tmp_grid = new int[size][size];
+        int[][] index=new int[size][size];
+        for (int i = 0; i < tmp_grid.length; i++) {
+            for (int j = 0; j < tmp_grid.length; j++) {
+                tmp_grid[i][j]=0;
+                index[i][j]=0;
+            }
+        }
+
+        Random rnd = new Random(System.currentTimeMillis());
+        int ind1,ind2;
+
+        for (int l=0;l<rnd.nextInt(tmp_grid.length)+1;l++) {
+            ind1=rnd.nextInt(tmp_grid.length);
+            ind2=rnd.nextInt(tmp_grid.length);
+            while (index[ind1][ind2]==-1)
+                ind1=rnd.nextInt(tmp_grid.length);
+                ind2=rnd.nextInt(tmp_grid.length);
+            tmp_grid[ind1][ind2]=1;
+            int mm=0;
+            while (mm<4) {
+                index[ind1][ind2]=-1;
+                index = getRotateArr(index);
+                mm++;
+            }
+
+        }
+        gridDec=new int[size];
+
+
+    }
+
+
+    void generateGrid() {
+        grid = new int[size][size];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid.length; j++) {
+                if(i==0 && j==0) {
+                    grid[i][j] = 1;
+                }
+
+                else if (i==1 && j==1) {
+                    grid[i][j]=1;
+                }
+
+                else {
+                    grid[i][j] = 0;
+                }
+            }
+        }
     }
 
 }

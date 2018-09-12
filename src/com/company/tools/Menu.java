@@ -274,22 +274,65 @@ public class Menu {
 
 
     public static void CardanoMenu(Scanner in) {
-        CardanoGrid testCardano=new CardanoGrid();
-        char[][][] encr=testCardano.doEncrypt("строкаюяафыфаыфа ааа");
-        for (int m=0;m<encr.length;m++) {
-            for (int i = 0; i < encr[m].length; i++) {
-                for (int j = 0; j < encr[m][i].length; j++)
-                    System.out.print(encr[m][i][j]);
-                System.out.println();
+        int menu = 0;
+        while (menu != 3) {
+            System.out.println("Шифрование и дешифрование при помощи решетки Кардано");
+            System.out.println("Введите 1 для шифрования");
+            System.out.println("Введите 2 для дешифрования");
+            System.out.println("Введите 3 для генерации и просмотра решетки");
+            System.out.println("Введите 4 для выхода");
+            System.out.println("Введите число:");
+            menu = in.nextInt();
+            in.nextLine();
+            switch (menu) {
+                case 1:
+                    CardanoGrid testCardano = new CardanoGrid();
+                    char[][][] encr = testCardano.doEncrypt("строкаюяафыфаыфа ааа");
+                    for (int m = 0; m < encr.length; m++) {
+                        for (int i = 0; i < encr[m].length; i++) {
+                            for (int j = 0; j < encr[m][i].length; j++)
+                                System.out.print(encr[m][i][j]);
+                            System.out.println();
+                        }
+                        System.out.println();
+                    }
+                    String decr = testCardano.doDecrypt(encr);
+                    System.out.println("Расшифрованная строка: " + decr);
+                    testCardano.generateGrid1();
+                    break;
+                case 3:
+                    CardanoGrid testCardano1=new CardanoGrid();
+                    testCardano1.generateGrid1();
+                    System.out.println("Введите имя файла для записи результатов дешифрования");
+                    String newFileName = in.next();
+                    for (int i=0;i<testCardano1.getGrid().length;i++) {
+                        for (int j=0;j<testCardano1.getGrid()[i].length;j++){
+                            try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFileName))) {
+                                bw.write(String.valueOf(testCardano1.getGrid()[i][j]));
+                                System.out.println(String.valueOf(testCardano1.getGrid()[i][j]));
+                                bw.write(System.lineSeparator());
+                                //bw.write(" ");
+                            }
+                            catch (IOException ex) {
+                                System.out.println(ex.getMessage());
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    System.out.println("Выход");
+                    break;
+                default:
+                    System.out.println("Нет такой опции");
+                    break;
+
             }
-            System.out.println();
+
         }
-        String decr=testCardano.doDecrypt(encr);
-        System.out.println("Расшифрованная строка: "+decr);
     }
 
     public static void GamblingMenu(Scanner in){
-         int menu = 0;
+        int menu = 0;
         while (menu != 5) {
             System.out.println("Шифрование и дешифрование при помощи однократного гаммирования");
             System.out.println("Введите 1 для шифрования");

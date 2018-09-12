@@ -27,14 +27,19 @@ public class Main {
             switch(out_menu) {
                 case 1:
                     Menu.CaesarMenu(in);
+                    break;
                 case 2:
                     Menu.SloganMenu(in);
+                    break;
                 case 3:
                     Menu.PolybiusMenu(in);
+                    break;
                 case 4:
                     Menu.CardanoMenu(in);
+                    break;
                 case 5:
                     Menu.GamblingMenu(in);
+                    break;
                 case 6:
                     System.out.println("Выход");
                     break;
