@@ -479,15 +479,17 @@ public class Menu {
                     break;
                 case 2:
                     //расшифрование
-                    String strToDecrypt;
+                    String strToDecrypt="";
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
-
+                    String tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToDecrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToDecrypt+= tmpStr;
+                        }
                         System.out.println("Исходная строка:" + strToDecrypt);
                         System.out.println("Введите имя файла ключа для дешифрования: ");
                         fileName = in.nextLine();
