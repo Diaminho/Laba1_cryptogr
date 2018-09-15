@@ -21,14 +21,18 @@ public class Menu {
             in.nextLine();
             switch (menu) {
                 case 1:
-                    String strToEncrypt;
+                    String strToEncrypt="";
                     //считывание данных из файла
                     System.out.println("Введите имя файла для шифрования: ");
                     String fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
+                    String tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToEncrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToEncrypt+= tmpStr;
+                        }
+                        //strToEncrypt = br.readLine();
                         //шифрование и дефишрования с помощью шифра Цезаря
                         Caesar testCaesar = new Caesar();
                         int shift;
@@ -61,16 +65,19 @@ public class Menu {
                     break;
                 case 2:
                     //расшифрование
-                    String strToDecrypt;
+                    String strToDecrypt="";
                     Caesar testCaesar = new Caesar();
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
-
+                   tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToDecrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToDecrypt+= tmpStr;
+                        }
+                        //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
 
                         System.out.println("Введите сдвиг:");
@@ -115,14 +122,18 @@ public class Menu {
             in.nextLine();
             switch (menu) {
                 case 1:
-                    String strToEncrypt;
+                    String strToEncrypt="";
                     //считывание данных из файла
                     System.out.println("Введите имя файла для шифрования: ");
                     String fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
+                    String tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToEncrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToEncrypt+= tmpStr;
+                        }
+                        //strToEncrypt = br.readLine();
                         Slogan testSlogan = new Slogan();
                         System.out.println("Введите кодовое слово для шифрования (слоган): ");
                         String slogan=in.nextLine();
@@ -150,16 +161,19 @@ public class Menu {
                     break;
                 case 2:
                     //расшифрование
-                    String strToDecrypt;
+                    String strToDecrypt="";
                     Slogan testSlogan = new Slogan();
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
-
+                    tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToDecrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToDecrypt+= tmpStr;
+                        }
+                        //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
 
                         System.out.println("Введите кодовое слово(слоган):");
@@ -204,14 +218,18 @@ public class Menu {
             in.nextLine();
             switch (menu) {
                 case 1:
-                    String strToEncrypt;
+                    String strToEncrypt="";
                     //считывание данных из файла
                     System.out.println("Введите имя файла для шифрования: ");
                     String fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
+                    String tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToEncrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToEncrypt+= tmpStr;
+                        }
+                        //strToEncrypt = br.readLine();
                         PolybiusSquare testPoly=new PolybiusSquare();
                         testPoly.printAlphabet();
                         System.out.println("Исходная строка: "+strToEncrypt);
@@ -235,16 +253,19 @@ public class Menu {
                     break;
                 case 2:
                     //расшифрование
-                    String strToDecrypt;
+                    String strToDecrypt="";
                     PolybiusSquare testPoly=new PolybiusSquare();
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
-
+                    tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToDecrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToDecrypt+= tmpStr;
+                        }
+                        //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
                         //расшифрование
                         String decryptedString=testPoly.doDecrypt(strToDecrypt);
@@ -295,10 +316,11 @@ public class Menu {
                     int[] gridBin=testCardano1.getGridBin();
                     int[] gridDec=testCardano1.binToDec(gridBin);
                     System.out.println("Была сгенерирована следующая сетка:");
-                    for (int i=0;i<testCardano1.getGrid().length;i++){
+                    testCardano1.printGrid();
+                    /*for (int i=0;i<testCardano1.getGrid().length;i++){
                         System.out.print(gridDec[i]+" ");
-                    }
-                    System.out.println();
+                    }*/
+                    //System.out.println();
 
                     System.out.println("Введите имя файла для сохранения сгенерированной решетки");
                     String FileName = in.nextLine();
@@ -328,19 +350,8 @@ public class Menu {
                     catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     }
-
                     char[][][] encr = testCardano1.doEncrypt(strToEncypt);
-
-                    for (int i=0;i<encr.length;i++){
-                        for (int j=0;j<encr[i].length;j++){
-                            for (int k=0;k<encr[i][j].length;k++){
-                                System.out.println(encr[i][j][k]);
-                            }
-                            System.out.println();
-                        }
-                        System.out.println();
-                    }
-
+                    testCardano1.printEncGrid();
                     System.out.println("Введите имя файла для сохранения зашифрованной решетки");
                     String FileName2 = in.next();
                     try (BufferedWriter bw = new BufferedWriter(new FileWriter(FileName2))) {
@@ -366,35 +377,19 @@ public class Menu {
                     System.out.println("Введите имя файла с решеткой: ");
                     String fileName1 = in.nextLine();
                     CardanoGrid testCard = new CardanoGrid();
-                    try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
-                        //while (br.readLine()) != null){
-                        testCard.setSize(testCard.countLines(fileName1));
-                    }
-                    catch (IOException ex){
-                        System.out.println(ex.getMessage());
-                    }
-                    String tmpStr="";
-                    try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
-                        //while (br.readLine()) != null){
-                        testCard.setSize(testCard.countLines(fileName1));
-                    }
-                    catch (IOException ex){
-                        System.out.println(ex.getMessage());
-                    }
-                    //String strToDecrypt="";
-
+                    testCard.getGridFromFile(fileName1);
+                    testCard.printGrid();
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     String fileName = in.nextLine();
                     //CardanoGrid testCard = new CardanoGrid();
-                    testCard.setSize(6);
+                    //testCard.setSize(6);
                     String strToDecrypt="";
                     //System.out.println("Вы ввели: " + fileName);
                     String str_tmp="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
                         //str_tmp=br.readLine();
-
                         while((str_tmp = br.readLine()) != null){
                             strToDecrypt+= str_tmp;
                             //System.out.println(str_tmp);
@@ -405,8 +400,9 @@ public class Menu {
                     catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     }
-                    System.out.println(strToDecrypt);
+                    //System.out.println(strToDecrypt);
                     testCard.getInfoFromFile(strToDecrypt);
+                    testCard.printEncGrid();
                     String decText=testCard.doDecrypt(testCard.getEncryptedSquare());
                     System.out.println("Расшифрованный текст: "+decText);
                     //fileName = in.nextLine();
@@ -437,14 +433,17 @@ public class Menu {
             in.nextLine();
             switch (menu) {
                 case 1:
-                    String strToEncrypt;
+                    String strToEncrypt="";
                     //считывание данных из файла
                     System.out.println("Введите имя файла для шифрования: ");
                     String fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
+                    String tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
-                        strToEncrypt = br.readLine();
+                        while((tmpStr =br.readLine())!=null) {
+                            strToEncrypt+= tmpStr;
+                        }
                         Gambling testGambl=new Gambling();
                         System.out.println("Сгенерированный ключ: ");
                         testGambl.generateKey(strToEncrypt);
@@ -484,7 +483,7 @@ public class Menu {
                     System.out.println("Введите имя файла для дешифрования: ");
                     fileName = in.nextLine();
                     System.out.println("Вы ввели: " + fileName);
-                    String tmpStr="";
+                    tmpStr="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
                         while((tmpStr =br.readLine())!=null) {

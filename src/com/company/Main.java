@@ -52,11 +52,19 @@ public class Main {
         }
 
         /*
+        CardanoGrid test=new CardanoGrid();
+        test.getGridFromFile("grid.txt");
+        test.printGrid();*/
+        //String tmp=test.asBitString("11",4);
+        //System.out.println(tmp);
+
+        /*
         CardanoGrid cardanoGrid=new CardanoGrid();
         String str=cardanoGrid.asBitString(100, 4);
         System.out.println(str);
         cardanoGrid.getInfoFromFile("абвгде");
         */
+        //System.out.println((int)'А');
     }
 }
 

@@ -76,7 +76,7 @@ public class Gambling {
         String nkey=new String();
         Random rnd = new Random(System.currentTimeMillis());
         for (int i=0;i<str.length();i++){
-            nkey=nkey+alphabet.charAt(rnd.nextInt(alphabet.length()));
+            nkey=nkey+(char)(rnd.nextInt(63)+1040);
         }
         key=nkey;
     }

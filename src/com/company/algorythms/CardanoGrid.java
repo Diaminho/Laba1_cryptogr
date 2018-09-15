@@ -1,9 +1,6 @@
 package com.company.algorythms;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Random;
 
 public class CardanoGrid {
@@ -13,7 +10,7 @@ public class CardanoGrid {
 
     int size;
     int gridBin[];
-    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
+    final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.";
 
 
     public char[][][] getEncryptedSquare() {
@@ -23,7 +20,7 @@ public class CardanoGrid {
 
     public CardanoGrid() {
         //this.size=size;
-        generateGrid();
+        //generateGrid();
     }
 
     public void setSize(int size) {
@@ -114,7 +111,7 @@ public class CardanoGrid {
     }
 
     public String doDecrypt(char[][][] encryptedSquare) {
-        int ones=countOnes();
+        //int ones=countOnes();
         int[][] tmp_grid=grid;
         int k=0;
         StringBuffer decr=new StringBuffer();
@@ -206,16 +203,57 @@ public class CardanoGrid {
     }
 
 
-    public String asBitString(int value, int stringSize) {
-        final char[] buf = new char[stringSize];
-        for (int i = stringSize-1; i >= 0; i--) {
-            buf[stringSize-1 - i] = ((1 << i) & value) == 0 ? '0' : '1';
+    public String asBitString(String value, int stringSize) {
+        String str="";
+        for (int i = 0; i < stringSize-value.length(); i++) {
+            str+='0';
         }
-        return new String(buf);
+        return str+value;
+    }
+
+    public void getGridFromFile(String fileName1){
+        //System.out.println("Введите имя файла с решеткой: ");
+        //String fileName1 = in.nextLine();
+        //CardanoGrid testCard = new CardanoGrid();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
+            //while (br.readLine()) != null){
+            this.setSize(this.countLines(fileName1));
+        }
+        catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        String[] tgrid=new String[this.getSize()];
+        String tmpStr="";
+        int k=0;
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
+            while ((tmpStr=br.readLine()) != null) {
+                tgrid[k]=tmpStr;
+                k++;
+            }
+        }
+
+        catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println(tgrid[1]);
+        String[] ngrid=new String[tgrid.length];
+        System.out.println(tgrid.length);
+        for (int i=0;i<tgrid.length;i++){
+            ngrid[i]=this.asBitString(tgrid[i],tgrid.length);
+        }
+        System.out.println(ngrid[1]);
+
+        this.grid=new int[ngrid.length][ngrid.length];
+        for (int i=0;i<this.grid.length;i++){
+            for (int j=0;j<this.grid[i].length;j++){
+                this.grid[i][j]=Character.getNumericValue(ngrid[i].charAt(j));
+            }
+        }
     }
 
     public void getInfoFromFile(String info){
-        encryptedSquare=new char[info.length()/(size*size)][size][size];
+        encryptedSquare=new char[(info.length())/(size*size)][size][size];
+        System.out.println("size:"+info.length()/(size*size)+", size"+size);
         int l=0;
         for (int i=0;i<encryptedSquare.length;i++){
             for (int j=0;j<encryptedSquare[i].length;j++){
@@ -258,5 +296,25 @@ public class CardanoGrid {
     }
 
 
+    public void printGrid(){
+        for (int i=0;i<grid.length;i++){
+            for (int j=0;j<grid[i].length;j++){
+                System.out.print(grid[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printEncGrid(){
+        for (int i=0;i<encryptedSquare.length;i++){
+            for (int j=0;j<encryptedSquare[i].length;j++){
+                for (int k=0;k<encryptedSquare[i][j].length;k++) {
+                    System.out.print(encryptedSquare[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
 
 }
