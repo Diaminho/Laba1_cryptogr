@@ -522,6 +522,8 @@ public class Menu {
                             strToEncrypt+= tmpStr;
                         }
                         Gambling testGambl=new Gambling();
+
+                        System.out.println("Исходная строка: "+strToEncrypt);
                         System.out.println("Сгенерированный ключ: ");
                         testGambl.generateKey(strToEncrypt);
                         System.out.println(testGambl.getKey());
@@ -530,9 +532,14 @@ public class Menu {
                         in.nextLine();
                         switch (mod) {
                             case 1:
-                                String strToEncrypt1 = in.nextLine();
-                                System.out.println("Новый ключ: "+strToEncrypt1);
-                                testGambl.setKey(strToEncrypt1);
+                                System.out.println("Введите новый ключ");
+                                String keyInput = in.nextLine();
+                                while (keyInput.length()>strToEncrypt.length()){
+                                    System.out.println("Длина ключа превышает длину исходной строки");
+                                    keyInput=in.nextLine();
+                                }
+                                System.out.println("Новый ключ: "+keyInput);
+                                testGambl.setKey(keyInput);
                                 break;
                             case 2:
                                 break;
@@ -550,8 +557,8 @@ public class Menu {
                             System.out.println(ex.getMessage());
                         }
 
-                        System.out.println("Исходная строка: "+strToEncrypt);
                         String encryptedString=testGambl.doEncrypt(strToEncrypt);
+
                         System.out.println("Зашифрованная строка: "+encryptedString);
                         //Запись зашифрованной строки в файл1
                         System.out.println("Введите имя файла для записи результатов шифрования");
