@@ -2,6 +2,7 @@ package com.company.algorythms;
 
 public class PolybiusSquare {
    char[][] alphabet;
+    String tmp_alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
 
     void setAlphabet() {
         String tmp_alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
@@ -11,6 +12,10 @@ public class PolybiusSquare {
                 alphabet[i][j]=tmp_alphabet.charAt(i*alphabet.length+j);
             }
         }
+    }
+
+    public String getTmp_alphabet(){
+        return tmp_alphabet;
     }
 
     public char[][] getAlphabet() {

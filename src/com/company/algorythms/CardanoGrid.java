@@ -1,5 +1,7 @@
 package com.company.algorythms;
 
+import com.company.tools.Validator;
+
 import java.io.*;
 import java.util.Random;
 
@@ -12,7 +14,9 @@ public class CardanoGrid {
     int gridBin[];
     final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.";
 
-
+    public String getAlphabet(){
+        return alphabet;
+    }
     public char[][][] getEncryptedSquare() {
         return encryptedSquare;
     }
@@ -183,26 +187,6 @@ public class CardanoGrid {
         return dec;
     }
 
-    void generateGrid() {
-        grid = new int[size][size];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid.length; j++) {
-                if(i==0 && j==0) {
-                    grid[i][j] = 1;
-                }
-
-                else if (i==1 && j==1) {
-                    grid[i][j]=1;
-                }
-
-                else {
-                    grid[i][j] = 0;
-                }
-            }
-        }
-    }
-
-
     public String asBitString(String value, int stringSize) {
         String str="";
         for (int i = 0; i < stringSize-value.length(); i++) {
@@ -211,16 +195,18 @@ public class CardanoGrid {
         return str+value;
     }
 
-    public void getGridFromFile(String fileName1){
-        //System.out.println("Введите имя файла с решеткой: ");
-        //String fileName1 = in.nextLine();
-        //CardanoGrid testCard = new CardanoGrid();
+    public int getGridFromFile(String fileName1){
+        Validator validator=new Validator();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName1))) {
             //while (br.readLine()) != null){
             this.setSize(this.countLines(fileName1));
         }
         catch (IOException ex){
             System.out.println(ex.getMessage());
+        }
+        if (!validator.validateGridSize(this.getSize())){
+            System.out.println("Неверный размер сетки: "+this.getSize());
+            return -1;
         }
         String[] tgrid=new String[this.getSize()];
         String tmpStr="";
@@ -231,24 +217,30 @@ public class CardanoGrid {
                 k++;
             }
         }
-
         catch (IOException ex){
             System.out.println(ex.getMessage());
         }
-        System.out.println(tgrid[1]);
+        for (int i=0;i<tgrid.length;i++) {
+            if (!validator.validateGridFromFile(tgrid[i])) {
+                System.out.println("В файле должны быть 0 и 1");
+                return -2;
+            }
+        }
+
         String[] ngrid=new String[tgrid.length];
-        System.out.println(tgrid.length);
         for (int i=0;i<tgrid.length;i++){
             ngrid[i]=this.asBitString(tgrid[i],tgrid.length);
         }
-        System.out.println(ngrid[1]);
-
         this.grid=new int[ngrid.length][ngrid.length];
         for (int i=0;i<this.grid.length;i++){
             for (int j=0;j<this.grid[i].length;j++){
                 this.grid[i][j]=Character.getNumericValue(ngrid[i].charAt(j));
             }
         }
+        if(!validator.validateGrid(grid)){
+            return -3;
+        }
+        return 0;
     }
 
     public void getInfoFromFile(String info){

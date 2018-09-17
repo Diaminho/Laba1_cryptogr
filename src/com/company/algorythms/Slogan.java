@@ -8,6 +8,10 @@ public class Slogan {
     String shiftedAlphabet;
     String keyword;
 
+    public String getAlphabet() {
+        return alphabet;
+    }
+
     public String getShiftedAlphabet() {
         return shiftedAlphabet;
     }

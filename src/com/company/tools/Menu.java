@@ -1,7 +1,6 @@
 package com.company.tools;
 
 import com.company.algorythms.*;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ public class Menu {
             System.out.println("Введите число:");
             menu = in.nextInt();
             in.nextLine();
+            Validator validator=new Validator();
             switch (menu) {
                 case 1:
                     String strToEncrypt="";
@@ -35,11 +35,20 @@ public class Menu {
                         //strToEncrypt = br.readLine();
                         //шифрование и дефишрования с помощью шифра Цезаря
                         Caesar testCaesar = new Caesar();
-                        int shift;
+                        if (!validator.validateText(strToEncrypt,testCaesar.getAlphabet())) {
+                            System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testCaesar.getAlphabet());
+                            break;
+                        }
+                        //int shift=-1;
+                        testCaesar.setShift(-1);
                         System.out.println("Введите сдвиг");
-                        shift = in.nextInt();
-                        in.nextLine();
-                        testCaesar.setShift(shift);
+                        while (!validator.validateShift(testCaesar.getAlphabet(),testCaesar.getShift())) {
+                            System.out.println("Сдвиг должен быть положительным целым числом");
+                            testCaesar.setShift(in.nextInt());
+                            in.nextLine();
+                        }
                         //String strToDecrypt="здесь была строка";
                         System.out.println("Исходная строка:" + strToEncrypt);
 
@@ -79,11 +88,19 @@ public class Menu {
                         }
                         //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
-
-                        System.out.println("Введите сдвиг:");
-                        int shift = in.nextInt();
-                        in.nextLine();
-                        testCaesar.setShift(shift);
+                        if (!validator.validateText(strToDecrypt,testCaesar.getAlphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testCaesar.getAlphabet());
+                            break;
+                        }
+                        testCaesar.setShift(-1);
+                        System.out.println("Введите сдвиг");
+                        while (!validator.validateShift(testCaesar.getAlphabet(),testCaesar.getShift())) {
+                            System.out.println("Сдвиг должен быть положительным целым числом");
+                            testCaesar.setShift(in.nextInt());
+                            in.nextLine();
+                        }
                         //расшифрование
                         String decryptedString = testCaesar.doDecrypt(strToDecrypt);
                         System.out.println("Расшифрованная строка:" + decryptedString);
@@ -112,6 +129,7 @@ public class Menu {
 
     public static void SloganMenu(Scanner in) {
         int menu = 0;
+        Validator validator=new Validator();
         while (menu != 3) {
             System.out.println("Шифрование и дешифрование при помощи слогана");
             System.out.println("Введите 1 для шифрования");
@@ -135,13 +153,31 @@ public class Menu {
                         }
                         //strToEncrypt = br.readLine();
                         Slogan testSlogan = new Slogan();
+                        if (!validator.validateText(strToEncrypt,testSlogan.getAlphabet())) {
+                            System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testSlogan.getAlphabet());
+                            break;
+                        }
+
                         System.out.println("Введите кодовое слово для шифрования (слоган): ");
-                        String slogan=in.nextLine();
-                        testSlogan.setKeyword(slogan);
+                        testSlogan.setKeyword(in.nextLine());
+                        while (!validator.validateText(testSlogan.getKeyword(),testSlogan.getAlphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            testSlogan.setKeyword(in.nextLine());
+                            break;
+                        }
                         testSlogan.setShiftedAlphabet();
                         //System.out.println("новый алфавит: "+testSlogan.getShiftedAlphabet());
-                        String encryptedString=testSlogan.doEncrypt(strToEncrypt);
                         System.out.println("Исходная строка:" + strToEncrypt);
+                        if (!validator.validateText(strToEncrypt,testSlogan.getAlphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testSlogan.getAlphabet());
+                            break;
+                        }
+                        String encryptedString=testSlogan.doEncrypt(strToEncrypt);
                         System.out.println("Зашифрованная строка:"+encryptedString);
                         //Запись зашифрованной строки в файл1
                         System.out.println("Введите имя файла для записи результатов шифрования");
@@ -175,10 +211,20 @@ public class Menu {
                         }
                         //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
-
+                        if (!validator.validateText(strToDecrypt,testSlogan.getAlphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testSlogan.getAlphabet());
+                            break;
+                        }
                         System.out.println("Введите кодовое слово(слоган):");
-                        String slogan = in.nextLine();
-                        testSlogan.setKeyword(slogan);
+                        testSlogan.setKeyword(in.nextLine());
+                        while (!validator.validateText(testSlogan.getKeyword(),testSlogan.getAlphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            testSlogan.setKeyword(in.nextLine());
+                            break;
+                        }
                         testSlogan.setShiftedAlphabet();
                         //расшифрование
                         String decryptedString=testSlogan.doDecrypt(strToDecrypt);
@@ -208,6 +254,7 @@ public class Menu {
 
     public static void PolybiusMenu(Scanner in) {
         int menu = 0;
+        Validator validator=new Validator();
         while (menu != 3) {
             System.out.println("Шифрование и дешифрование при помощи квадрата Полибия");
             System.out.println("Введите 1 для шифрования");
@@ -219,6 +266,7 @@ public class Menu {
             switch (menu) {
                 case 1:
                     String strToEncrypt="";
+
                     //считывание данных из файла
                     System.out.println("Введите имя файла для шифрования: ");
                     String fileName = in.nextLine();
@@ -233,6 +281,12 @@ public class Menu {
                         PolybiusSquare testPoly=new PolybiusSquare();
                         testPoly.printAlphabet();
                         System.out.println("Исходная строка: "+strToEncrypt);
+                        if (!validator.validateText(strToEncrypt,testPoly.getTmp_alphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testPoly.getTmp_alphabet());
+                            break;
+                        }
                         String encryptedString=testPoly.doEncrypt(strToEncrypt);
                         System.out.println("Зашифрованная строка: "+encryptedString);
                       //Запись зашифрованной строки в файл1
@@ -267,6 +321,12 @@ public class Menu {
                         }
                         //strToDecrypt = br.readLine();
                         System.out.println("Исходная строка:" + strToDecrypt);
+                        if (!validator.validateText(strToDecrypt,testPoly.getTmp_alphabet())) {
+                            //System.out.println("Исходная строка: "+strToEncrypt);
+                            System.out.println("Используйте символы алфавита");
+                            System.out.println(testPoly.getTmp_alphabet());
+                            break;
+                        }
                         //расшифрование
                         String decryptedString=testPoly.doDecrypt(strToDecrypt);
                         System.out.println("Расшифрованная строка: "+decryptedString);
@@ -297,21 +357,25 @@ public class Menu {
 
     public static void CardanoMenu(Scanner in) {
         int menu = 0;
-        while (menu != 4) {
+        Validator validator=new Validator();
+        while (menu != 3) {
             System.out.println("Шифрование и дешифрование при помощи решетки Кардано");
             System.out.println("Введите 1 для шифрования");
             System.out.println("Введите 2 для дешифрования");
-            System.out.println("Введите 3 для генерации и просмотра решетки");
-            System.out.println("Введите 4 для выхода");
+            System.out.println("Введите 3 для выхода");
             System.out.println("Введите число:");
             menu = in.nextInt();
             in.nextLine();
             switch (menu) {
                 case 1:
                     CardanoGrid testCardano1 = new CardanoGrid();
+                    testCardano1.setSize(-1);
                     System.out.println("Введите размер решетки:");
-                    testCardano1.setSize(in.nextInt());
-                    in.nextLine();
+                    while (!validator.validateGridSize(testCardano1.getSize())){
+                        System.out.println("Размер решетки должен положительным и четным");
+                        testCardano1.setSize(in.nextInt());
+                        in.nextLine();
+                    }
                     testCardano1.generateGrid1();
                     int[] gridBin=testCardano1.getGridBin();
                     int[] gridDec=testCardano1.binToDec(gridBin);
@@ -344,11 +408,19 @@ public class Menu {
                     System.out.println("Введите имя файла с текстом для шифрования:");
                     String fileToEnc=in.nextLine();
                     String strToEncypt="";
+                    String tmpStr;
                     try (BufferedReader br1 = new BufferedReader(new FileReader(fileToEnc))) {
-                        strToEncypt=br1.readLine();
+                        while ((tmpStr=br1.readLine())!=null) {
+                            strToEncypt +=tmpStr;
+                        }
                     }
                     catch (IOException ex) {
                         System.out.println(ex.getMessage());
+                    }
+                    if(!validator.validateText(strToEncypt,testCardano1.getAlphabet())){
+                        System.out.println("Используйте символы алфавита");
+                        System.out.println(testCardano1.getAlphabet());
+                        break;
                     }
                     char[][][] encr = testCardano1.doEncrypt(strToEncypt);
                     testCardano1.printEncGrid();
@@ -377,15 +449,14 @@ public class Menu {
                     System.out.println("Введите имя файла с решеткой: ");
                     String fileName1 = in.nextLine();
                     CardanoGrid testCard = new CardanoGrid();
-                    testCard.getGridFromFile(fileName1);
+                    if (testCard.getGridFromFile(fileName1)!=0) {
+                        break;
+                    }
                     testCard.printGrid();
                     //считывание данных из файла
                     System.out.println("Введите имя файла для дешифрования: ");
                     String fileName = in.nextLine();
-                    //CardanoGrid testCard = new CardanoGrid();
-                    //testCard.setSize(6);
                     String strToDecrypt="";
-                    //System.out.println("Вы ввели: " + fileName);
                     String str_tmp="";
                     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
                         //чтение построчно
@@ -394,20 +465,25 @@ public class Menu {
                             strToDecrypt+= str_tmp;
                             //System.out.println(str_tmp);
                         }
-
-
                     }
                     catch (IOException ex) {
                         System.out.println(ex.getMessage());
                     }
-                    //System.out.println(strToDecrypt);
+                    if (!validator.validateText(strToDecrypt,testCard.getAlphabet())){
+                        System.out.println("Используйте символы алфавита");
+                        System.out.println(testCard.getAlphabet());
+                        break;
+                    }
                     testCard.getInfoFromFile(strToDecrypt);
+                    if (!validator.validateEncodedGrid(testCard.getEncryptedSquare(),testCard.getSize(),testCard.getAlphabet())){
+                        break;
+                    }
                     testCard.printEncGrid();
                     String decText=testCard.doDecrypt(testCard.getEncryptedSquare());
                     System.out.println("Расшифрованный текст: "+decText);
                     //fileName = in.nextLine();
                     break;
-                case 4:
+                case 3:
                     System.out.println("Выход");
                     break;
                 default:
@@ -421,6 +497,7 @@ public class Menu {
 
     public static void GamblingMenu(Scanner in){
         int menu = 0;
+        Validator validator=new Validator();
         while (menu != 5) {
             System.out.println("Шифрование и дешифрование при помощи однократного гаммирования");
             System.out.println("Введите 1 для шифрования");
@@ -448,6 +525,21 @@ public class Menu {
                         System.out.println("Сгенерированный ключ: ");
                         testGambl.generateKey(strToEncrypt);
                         System.out.println(testGambl.getKey());
+                        System.out.println("Вы хотите изменить ключ? (1-да, 2-нет)");
+                        int mod=in.nextInt();
+                        in.nextLine();
+                        switch (mod) {
+                            case 1:
+                                String strToEncrypt1 = in.nextLine();
+                                System.out.println("Новый ключ: "+strToEncrypt1);
+                                testGambl.setKey(strToEncrypt1);
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                System.out.println("Введите 1 или 2");
+                                break;
+                        }
                         System.out.println("Введите имя файла для сохранения ключа: ");
                         String fileName1 = in.nextLine();
                         try (BufferedWriter bw1 = new BufferedWriter(new FileWriter(fileName1))) {
