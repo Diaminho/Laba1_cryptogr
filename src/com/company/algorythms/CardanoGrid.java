@@ -149,7 +149,7 @@ public class CardanoGrid {
         int ind1,ind2;
         ind1=rnd.nextInt(tmp_grid.length);
         ind2=rnd.nextInt(tmp_grid.length);
-        for (int l=0;l<rnd.nextInt(tmp_grid.length-2)+3;l++) {
+        for (int l=0;l<rnd.nextInt(tmp_grid.length)+1;l++) {
             while (index[ind1][ind2]==-1) {
                 ind1 = rnd.nextInt(tmp_grid.length);
                 ind2 = rnd.nextInt(tmp_grid.length);
