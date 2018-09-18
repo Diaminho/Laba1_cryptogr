@@ -147,21 +147,21 @@ public class CardanoGrid {
 
         Random rnd = new Random(System.currentTimeMillis());
         int ind1,ind2;
-
-        for (int l=0;l<rnd.nextInt(tmp_grid.length)+1;l++) {
-            ind1=rnd.nextInt(tmp_grid.length);
-            ind2=rnd.nextInt(tmp_grid.length);
-            while (index[ind1][ind2]==-1)
-                ind1=rnd.nextInt(tmp_grid.length);
-                ind2=rnd.nextInt(tmp_grid.length);
+        ind1=rnd.nextInt(tmp_grid.length);
+        ind2=rnd.nextInt(tmp_grid.length);
+        for (int l=0;l<rnd.nextInt(tmp_grid.length-2)+3;l++) {
+            while (index[ind1][ind2]==-1) {
+                ind1 = rnd.nextInt(tmp_grid.length);
+                ind2 = rnd.nextInt(tmp_grid.length);
+            }
             tmp_grid[ind1][ind2]=1;
+            //System.out.println("ind1 "+index[ind1][ind2]);
             int mm=0;
             while (mm<4) {
                 index[ind1][ind2]=-1;
                 index = getRotateArr(index);
                 mm++;
             }
-
         }
         grid=tmp_grid;
         gridBin =new int[size];
@@ -173,10 +173,6 @@ public class CardanoGrid {
             gridBin[i]=tmp_num;
             tmp_num=0;
         }
-
-        for (int i = 0; i< gridBin.length; i++)
-            System.out.println(gridBin[i]);
-
     }
 
 
@@ -245,7 +241,6 @@ public class CardanoGrid {
 
     public void getInfoFromFile(String info){
         encryptedSquare=new char[(info.length())/(size*size)][size][size];
-        System.out.println("size:"+info.length()/(size*size)+", size"+size);
         int l=0;
         for (int i=0;i<encryptedSquare.length;i++){
             for (int j=0;j<encryptedSquare[i].length;j++){

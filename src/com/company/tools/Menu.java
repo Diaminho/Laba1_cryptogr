@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-
     public static void CaesarMenu(Scanner in) {
         int menu = 0;
         while (menu != 3) {

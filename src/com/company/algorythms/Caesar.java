@@ -1,5 +1,4 @@
 package com.company.algorythms;
-
 public class Caesar implements ReplacementCode {
     int shift;
     final String alphabet="абвгдеёжзийклмнопрстуфхцчшщъыьэюя +-";
@@ -19,7 +18,6 @@ public class Caesar implements ReplacementCode {
         for (int i=0;i<strToDecrypt.length();i++) {
             if (alphabet.indexOf(strToDecrypt.charAt(i))-shift<0) {
                 tmp_ind=alphabet.length()+alphabet.indexOf(strToDecrypt.charAt(i))-shift;
-                System.out.println(tmp_ind);
             }
             else  {
                 tmp_ind=alphabet.indexOf(strToDecrypt.charAt(i))-shift;
@@ -45,7 +43,5 @@ public class Caesar implements ReplacementCode {
     public String getAlphabet() {
         return alphabet;
     }
-
-
 
 }
